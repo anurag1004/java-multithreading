@@ -12,7 +12,7 @@ public class MyThread extends Thread{
     }
     public void run(){
         System.out.println(Thread.currentThread());
-        for(int i=0;i<5;i++){
+        for(int i=0;i<2;i++){
             System.out.println("Thread "+id+" : "+i);
         }
     }
