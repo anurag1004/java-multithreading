@@ -5,18 +5,22 @@ public class Semaphore {
     public Semaphore(int size){
         counter = new AtomicInteger(size);
     }
-    public void waits(){
+    public void acquire(){
         synchronized (this) {
             while (counter.get() == 0) {
                 try {
-                    counter.wait();
-                } catch (Exception ignored) {
+                    wait();
+                } catch (InterruptedException interruptedException) {
+                    Thread.currentThread().interrupt();
                 }
             }
             counter.decrementAndGet();
         }
     }
-    public void signals(){
-        counter.incrementAndGet();
+    public void release(){
+        synchronized (this){
+            counter.incrementAndGet();
+            notifyAll();
+        }
     }
 }

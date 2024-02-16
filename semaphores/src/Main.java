@@ -10,31 +10,31 @@ class SomeClass{
     }
     public void incr(int i){
         System.out.println(Thread.currentThread().getName()+" waiting:incr");
-        semaphore.waits(); // entry
+        semaphore.acquire(); // entry
         System.out.println(Thread.currentThread().getName()+" enters:incr");
         this.data += i; // cs
         try {
             Thread.sleep(4000);
         }catch (Exception ignored){}
-        semaphore.signals(); // exit
+        semaphore.release(); // exit
         System.out.println(Thread.currentThread().getName()+" exits:incr");
     }
     public void decr(int i){
         System.out.println(Thread.currentThread().getName()+" waiting:decr");
-        semaphore.waits();
+        semaphore.acquire();
         System.out.println(Thread.currentThread().getName()+" enters:decr");
         this.data -= i;
         try {
             Thread.sleep(4000);
         }catch (Exception ignored){}
-        semaphore.signals();
+        semaphore.release();
         System.out.println(Thread.currentThread().getName()+" exits:decr");
     }
 }
 public class Main {
     public static void main(String[] args) {
         System.out.println("main starts");
-        int n = 0;
+        int n = 4;
         // at a time max n threads are allowed to enter cs
         SomeClass shared = new SomeClass(10,n);
         Thread t1 = new Thread(()->{
