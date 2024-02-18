@@ -36,9 +36,16 @@ public class UsingJustExecutorService {
             executor.submit(new PipelineWorker(order, storage));
         });
         executor.shutdown();
-        boolean isTerminated = executor.awaitTermination(20, TimeUnit.SECONDS);
-        if(isTerminated){
+        while(true){
+            Thread.sleep(1000);
             System.out.println(storage.read());
+            if(executor.isTerminated()){
+                break;
+            }
         }
+//        boolean isTerminated = executor.awaitTermination(20, TimeUnit.SECONDS);
+//        if(isTerminated){
+//            System.out.println(storage.read());
+//        }
     }
 }
