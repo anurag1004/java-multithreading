@@ -16,18 +16,19 @@ class SimpleTask implements Runnable{
 public class AwaitingTerminationExample {
     public static void main(String[] args) throws InterruptedException {
         System.out.println("main starts");
-        ExecutorService exec = Executors.newFixedThreadPool(3);
-        for (int i = 0; i < 15; i++) {
+        ExecutorService exec = Executors.newFixedThreadPool(2);
+        for (int i = 0; i < 7; i++) {
             exec.submit(new SimpleTask());
         }
         Thread.sleep(2000);
         // stop gracefully
         exec.shutdown();
-        boolean isTerminatedGracefully = exec.awaitTermination(10, TimeUnit.SECONDS); // wait for 10secs for executer to terminate
-        if(isTerminatedGracefully){
-            System.out.println("Executor service terminated within 10secs");
+        int timeout = 15;
+        boolean isTerminatedGracefully = exec.awaitTermination(timeout, TimeUnit.SECONDS); // wait for 10secs for executer to terminate
+        if(!isTerminatedGracefully){
+            System.out.printf("Executor service didnot terminated within %dsecs\n",timeout);
         }else{
-            System.out.println("Executor terminated gracefully within 10 seconds");
+            System.out.printf("Executor terminated gracefully within %dseconds\n",timeout);
         }
         System.out.println("main exits");
     }
