@@ -1,4 +1,4 @@
-public class Main {
+class Main {
     public static void main(String[] args) {
         Object lock1 = new Object();
         Object lock2 = new Object();

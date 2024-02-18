@@ -24,6 +24,7 @@ public class AwaitingTerminationExample {
         // stop gracefully
         exec.shutdown();
         int timeout = 15;
+        // blocking for a max of 15sec
         boolean isTerminatedGracefully = exec.awaitTermination(timeout, TimeUnit.SECONDS); // wait for 10secs for executer to terminate
         if(!isTerminatedGracefully){
             System.out.printf("Executor service didnot terminated within %dsecs\n",timeout);
