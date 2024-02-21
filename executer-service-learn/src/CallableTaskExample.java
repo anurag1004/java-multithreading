@@ -31,9 +31,12 @@ class CallableTask implements Callable<Msg>{
 public class CallableTaskExample {
     public static void main(String[] args) {
         ExecutorService executor = Executors.newCachedThreadPool(); // automatically creates and reuse threds, if a thread remains idle for a long time it may be terminated and removed from pool
+        Future<Msg> future0 = executor.submit(new CallableTask("callable0"));
         List<Callable<Msg>> callableList = List.of(new CallableTask("callable1"), new CallableTask("callable2"), new CallableTask("callable3"));
         try {
             List<Future<Msg>> futures = executor.invokeAll(callableList);
+            Msg fromZero = future0.get();
+            System.out.println(fromZero.getMsg());
             for(Future<Msg> future: futures){
                 Msg result = future.get();
                 System.out.println("Received: "+result.getMsg());
